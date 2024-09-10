@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+      <div class="title"> Menu </div>
+      <a th:href="@{/create}">
+          <button class="button"> Resume creation</button>
+      </a>
+      <a th:href="@{/info}">
+          <button class="button"> Information</button>
+      </a>
+  </div>
+</body>
+</html>
