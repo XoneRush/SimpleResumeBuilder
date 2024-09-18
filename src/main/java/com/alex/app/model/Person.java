@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
 import java.util.Date;
+import java.util.List;
 
 public class Person {
     @NotEmpty(message="name cant be empty")
@@ -24,14 +25,17 @@ public class Person {
     @Size(min = 0, max = 150, message = "message cant be greater then 150 symbols")
     private String experience;
 
+    private List<WorkPlace> workPlaces;
+
     public Person(){};
-    public Person(String name, String last_name, Date date_of_birth, String number, String email, String experience, String city) {
+    public Person(String name, String last_name, Date date_of_birth, String number, String email, String experience, String city, List<WorkPlace> workPlaces) {
         this.name = name;
         this.last_name = last_name;
         this.date_of_birth = date_of_birth;
         this.number = number;
         this.email = email;
         this.experience = experience;
+        this.workPlaces = workPlaces;
     }
 
     public String getName() {
@@ -79,6 +83,14 @@ public class Person {
 
     public void setExperience(String experience) {
         this.experience = experience;
+    }
+
+    public List<WorkPlace> getWorkPlaces() {
+        return workPlaces;
+    }
+
+    public void setWorkPlaces(List<WorkPlace> workPlaces) {
+        this.workPlaces = workPlaces;
     }
 
     @Override

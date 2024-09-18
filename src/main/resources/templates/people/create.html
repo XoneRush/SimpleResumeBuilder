@@ -4,6 +4,29 @@
     <meta charset="UTF-8">
     <title>Create resume</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        function addWorkPlace() {
+            var container = document.getElementById("workPlaces-container");
+            var count = container.children.length;
+
+            var newWorkPlace = document.createElement("div");
+            newWorkPlace.innerHTML = `
+                <div>
+                    <hr/>
+                    <br/>
+                    <div class="title"> Work information </div>
+                    <input type="text" placeholder="Company"  name="workPlaces[${count}].nameOfCompany" id="nameOfCompany${count}">
+                    <br/>
+                    <input type="text" placeholder="Position" name="workPlaces[${count}].nameOfRole" id="nameOfRole${count}">
+                    <br/>
+                    <input type="text" placeholder="Start date" name="workPlaces[${count}].startOfWork" id="startOfWork${count}">
+                    <br/>
+                    <input type="text" placeholder="End date" name="workPlaces[${count}].endOfWork" id="endOfWork${count}">
+                    <br/>
+                </div>`;
+            container.appendChild(newWorkPlace);
+        }
+    </script>
 </head>
 <body>
 
@@ -38,7 +61,13 @@
             <input style="max-width=150ch" placeholder="Work experience" type="text" th:field="*{experience}" id="experience">
             <div style="color:red" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"> experience error </div>
             <br/>
+
+            <div class="workPlaces" id="workPlaces-container" th:object = "${workPlaces}">
+
+            </div>
+
             <hr/>
+            <button class="button" type="button" onclick="addWorkPlace()">Add Workspace</button>
             <input type="submit" value="create!">
     </form>
     <a a th:href="@{/}"> <button class="button"> back </button></a>

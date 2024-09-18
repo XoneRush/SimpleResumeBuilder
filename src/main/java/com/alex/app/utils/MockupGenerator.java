@@ -1,6 +1,7 @@
 package com.alex.app.utils;
 
 import com.alex.app.model.Person;
+import com.alex.app.model.WorkPlace;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -11,7 +12,6 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -20,12 +20,18 @@ public class MockupGenerator {
     private static final String DATE_FORMAT = "dd.MM.yyyy";
     private static final int HEADER1_SIZE = 25;
     private static final int HEADER2_SIZE = 20;
+    private static final int HEADER3_SIZE = 12;
     private static final int TEXT_SIZE = 16;
+    private static final int TEXT_SIZE2 = 10;
     private static final float LEADING_MULTIPLIER = 1.5f;
     private static final Color HEADER_COLOR = Color.decode("#4a8bad");
+    private static final double BACKGROUND_MULTIPLIER = 0.3;
+
     private Person person;
     private String savePath;
     private PDFont font;
+    private PDPageContentStream contentStream;
+
     public MockupGenerator(Person person, String savePath ){
         this.person = person;
         this.savePath = savePath;
@@ -43,22 +49,38 @@ public class MockupGenerator {
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
         PDRectangle BBox = page.getBBox();
 
-        Rectangle rectangle = new Rectangle(0, 0, (int)(0.25 * BBox.getWidth()),(int)BBox.getHeight());
-        drawRect(contentStream,  HEADER_COLOR, rectangle, true);
+        drawBackground(contentStream, BBox);
 
+        //Основная информация
         contentStream.beginText();
         //ФИО
-        contentStream.newLineAtOffset((int)(BBox.getWidth() * 0.25 + 20), 750);
+        contentStream.newLineAtOffset((int)(BBox.getWidth() * BACKGROUND_MULTIPLIER + 20), 750);
 
         showHeader1(person.getName() + " " + person.getLast_name(), HEADER_COLOR ,contentStream);
         contentStream.newLine();
 
         //Личная информация
         showPersonalInfo(contentStream, dateFormat);
+
         //Опыт работы
-        showExpInfo(contentStream);
+        int quantity = person.getWorkPlaces().size();
+        for(int i = 0; i < quantity; i++) {
+            showExpInfo(i, dateFormat, contentStream);
+        }
+
         //Образование
         showEducationInfo(contentStream);
+
+        contentStream.endText();
+
+        //Генерация плашки справа
+        contentStream.beginText();
+        contentStream.newLineAtOffset(10, 600);
+
+        showContactInfo(contentStream);
+        contentStream.newLine();
+        showOtherInfo(contentStream);
+
 
         contentStream.endText();
 
@@ -68,32 +90,60 @@ public class MockupGenerator {
         document.close();
     }
 
+    private void drawBackground(PDPageContentStream content, PDRectangle BBox) throws IOException {
+        Rectangle rectangle = new Rectangle(0, 0, (int)(BACKGROUND_MULTIPLIER * BBox.getWidth()),(int)BBox.getHeight());
+        drawRect(content,  HEADER_COLOR, rectangle, true);
+    }
     private void showPersonalInfo(PDPageContentStream content, SimpleDateFormat dateFormat) throws IOException {
         showHeader2("ЛИЧНАЯ ИНФОРМАЦИЯ", HEADER_COLOR, content);
-        showMessage("Гражданство: ", content);
-        showMessage("Дата рождения: " + dateFormat.format(person.getDate_of_birth()), content);
-        showMessage("Образование: ", content);
-        showMessage("Пол: ", content);
-        showMessage("Семейное положение: ", content);
+        showMessage1("Гражданство: ", content);
+        showMessage1("Дата рождения: " + dateFormat.format(person.getDate_of_birth()), content);
+        showMessage1("Образование: ", content);
+        showMessage1("Пол: ", content);
+        showMessage1("Семейное положение: ", content);
         content.newLine();
     }
-    private void showExpInfo(PDPageContentStream content) throws IOException {
+    private void showExpInfo(int index, SimpleDateFormat dateFormat, PDPageContentStream content) throws IOException {
+        WorkPlace workPlace = person.getWorkPlaces().get(index);
+
         showHeader2("ОПЫТ РАБОТЫ", HEADER_COLOR, content);
         //Название компании
-        showMessage(" ", content);
-        showMessage("Период работы: ", content);
-        showMessage("Должность: ", content);
+        showMessage1(workPlace.getNameOfCompany(), content);
+        showMessage1("Период работы: " + dateFormat.format(workPlace.getStartOfWork())+
+                " - " + dateFormat.format(workPlace.getEndOfWork()), content);
+        showMessage1("Должность: "+ workPlace.getNameOfRole(), content);
         content.newLine();
     }
     private void showEducationInfo(PDPageContentStream content) throws IOException {
         showHeader2("ОБРАЗОВАНИЕ", HEADER_COLOR, content);
         //Название учеб.заведения
-        showMessage(" ",  content);
-        showMessage("Факультет: ", content);
-        showMessage("Специальность: ",  content);
-        showMessage("Форма обучения:  ",  content);
-        showMessage("Дата окончания:  ", content);
+        showMessage1(" ",  content);
+        showMessage1("Факультет: ", content);
+        showMessage1("Специальность: ",  content);
+        showMessage1("Форма обучения:  ",  content);
+        showMessage1("Дата окончания:  ", content);
     }
+    private void showContactInfo(PDPageContentStream content) throws IOException {
+        showHeader3("Контактная информация", Color.WHITE, content);
+        content.setStrokingColor(Color.WHITE);
+        content.setNonStrokingColor(Color.WHITE);
+        showMessage2(person.getNumber(), content);
+        showMessage2(person.getEmail(), content);
+        showMessage2(person.getCity(), content);
+    }
+
+    private void showOtherInfo(PDPageContentStream content) throws IOException {
+        showHeader3("Желаемая зарплата", Color.WHITE, content);
+        setColor(Color.WHITE, content);
+        showMessage2(" ", content);
+        showHeader3("Занятость", Color.WHITE, content);
+        setColor(Color.WHITE, content);
+        showMessage2(" ", content);
+        showHeader3("Иностранные языки", Color.WHITE, content);
+        showMessage2(" ", content);
+
+    }
+
 
 
     private void drawRect(PDPageContentStream content, Color color, Rectangle rect, boolean fill) throws IOException {
@@ -106,8 +156,12 @@ public class MockupGenerator {
             content.stroke();
         }
     }
-    private void showMessage(String message, PDPageContentStream content) throws IOException {
+    private void showMessage1(String message, PDPageContentStream content) throws IOException {
         setFontSizeWithLeading(TEXT_SIZE, content);
+        showTextLn(message, content);
+    }
+    private void showMessage2(String message, PDPageContentStream content) throws IOException {
+        setFontSizeWithLeading(TEXT_SIZE2, content);
         showTextLn(message, content);
     }
     private void showHeader1(String header, Color color,  PDPageContentStream content) throws IOException {
@@ -119,6 +173,12 @@ public class MockupGenerator {
     private void showHeader2(String header, Color color,  PDPageContentStream content) throws IOException {
         setColor(color, content);
         setFontSizeWithLeading(HEADER2_SIZE, content);
+        showTextLn(header, content);
+        setColor(Color.BLACK, content);
+    }
+    private void showHeader3(String header, Color color,  PDPageContentStream content) throws IOException {
+        setColor(color, content);
+        setFontSizeWithLeading(HEADER3_SIZE, content);
         showTextLn(header, content);
         setColor(Color.BLACK, content);
     }

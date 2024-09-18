@@ -3,18 +3,21 @@
   --font-color :  #555;
 }
 *{
-margin: 0
-padding: 0;
-box-sizing: border-box;
-font-family: dejavu-sans;
+    margin: 30px
+    padding: 30px;
+    box-sizing: border-box;
+    font-family: dejavu-sans;
+}
+html{
+  min-height: 100%
 }
 body{
-  background-image: linear-gradient(125deg, #a4ac86, #132a13);;
+  background-image: linear-gradient(125deg, #a4ac86, #132a13);
+  background-size: cover;
   display: flex;
-  height: 100vh;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 30px;
 }
 @font-face {
      font-family: dejavu-sans;
