@@ -27,6 +27,29 @@
             container.appendChild(newWorkPlace);
         }
     </script>
+    <script>
+        function addEducation() {
+            var container = document.getElementById("educations-container");
+            var count = container.children.length;
+
+            var newEducation = document.createElement("div");
+            newEducation.innerHTML = `
+                <div>
+                    <hr/>
+                    <br/>
+                    <div class="title"> Education </div>
+                    <input type="text" placeholder="Name of institution" name="educations[${count}].eduName" id="eduName${count}">
+                    <br/>
+                    <input type="text" placeholder="Major" name="educations[${count}].major" id="major${count}">
+                    <br/>
+                    <input type="text" placeholder="Form of education" name="educations[${count}].formOfEdu" id="formOfEdu${count}">
+                    <br/>
+                    <input type="text" placeholder="End date (dd.MM.yyyy)" name="educations[${count}].dateOfEnd" id="dateOfEnd${count}">
+                    <br/>
+                </div>`;
+            container.appendChild(newEducation);
+        }
+    </script>
 </head>
 <body>
 
@@ -65,9 +88,13 @@
             <div class="workPlaces" id="workPlaces-container" th:object = "${workPlaces}">
 
             </div>
+            <div class="educations" id="educations-container" th:object = "${educations}">
+
+            </div>
 
             <hr/>
             <button class="button" type="button" onclick="addWorkPlace()">Add Workspace</button>
+            <button class="button" type="button" onclick="addEducation()">Add Education</button>
             <input type="submit" value="create!">
     </form>
     <a a th:href="@{/}"> <button class="button"> back </button></a>

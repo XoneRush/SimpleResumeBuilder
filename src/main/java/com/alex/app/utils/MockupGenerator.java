@@ -1,5 +1,6 @@
 package com.alex.app.utils;
 
+import com.alex.app.model.Education;
 import com.alex.app.model.Person;
 import com.alex.app.model.WorkPlace;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -69,7 +70,10 @@ public class MockupGenerator {
         }
 
         //Образование
-        showEducationInfo(contentStream);
+        quantity = person.getEducations().size();
+        for(int i = 0; i < quantity; i++) {
+            showEducationInfo(i, dateFormat, contentStream);
+        }
 
         contentStream.endText();
 
@@ -114,14 +118,15 @@ public class MockupGenerator {
         showMessage1("Должность: "+ workPlace.getNameOfRole(), content);
         content.newLine();
     }
-    private void showEducationInfo(PDPageContentStream content) throws IOException {
+    private void showEducationInfo(int index, SimpleDateFormat dateFormat,PDPageContentStream content) throws IOException {
+        Education edu = person.getEducations().get(index);
+
         showHeader2("ОБРАЗОВАНИЕ", HEADER_COLOR, content);
-        //Название учеб.заведения
-        showMessage1(" ",  content);
-        showMessage1("Факультет: ", content);
-        showMessage1("Специальность: ",  content);
-        showMessage1("Форма обучения:  ",  content);
-        showMessage1("Дата окончания:  ", content);
+
+        showMessage1(edu.getEduName(),  content);
+        showMessage1("Специальность: " + edu.getMajor(),  content);
+        showMessage1("Форма обучения:  " + edu.getFormOfEdu(),  content);
+        showMessage1("Дата окончания:  " + dateFormat.format(edu.getDateOfEnd()), content);
     }
     private void showContactInfo(PDPageContentStream content) throws IOException {
         showHeader3("Контактная информация", Color.WHITE, content);

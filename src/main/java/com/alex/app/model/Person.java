@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
+import javax.swing.text.EditorKit;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,10 +27,12 @@ public class Person {
     @Size(min = 0, max = 150, message = "message cant be greater then 150 symbols")
     private String experience;
 
-    private List<WorkPlace> workPlaces;
+    private List<WorkPlace> workPlaces = new ArrayList<>();
+    private List<Education> educations = new ArrayList<>();
 
     public Person(){};
-    public Person(String name, String last_name, Date date_of_birth, String number, String email, String experience, String city, List<WorkPlace> workPlaces) {
+    public Person(String name, String last_name, Date date_of_birth, String number,
+                  String email, String experience, String city, List<WorkPlace> workPlaces, List<Education> educations) {
         this.name = name;
         this.last_name = last_name;
         this.date_of_birth = date_of_birth;
@@ -36,6 +40,7 @@ public class Person {
         this.email = email;
         this.experience = experience;
         this.workPlaces = workPlaces;
+        this.educations = educations;
     }
 
     public String getName() {
@@ -91,6 +96,14 @@ public class Person {
 
     public void setWorkPlaces(List<WorkPlace> workPlaces) {
         this.workPlaces = workPlaces;
+    }
+
+    public List<Education> getEducations() {
+        return educations;
+    }
+
+    public void setEducations(List<Education> educations) {
+        this.educations = educations;
     }
 
     @Override
