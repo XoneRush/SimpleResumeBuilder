@@ -23,7 +23,7 @@ public class PersonService {
         //logic генерация пдф
         try {
            MockupGenerator mockupGenerator = new MockupGenerator(person,"src/main/resources/static/doc.pdf" );
-           mockupGenerator.generateOne();
+           mockupGenerator.generateFirstMockup();
         }catch (IOException e){
             e.printStackTrace();
         } catch (ParseException e) {

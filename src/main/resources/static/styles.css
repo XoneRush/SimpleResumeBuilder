@@ -1,113 +1,102 @@
 :root {
   --custom-color: #52b69a;
-  --font-color :  #555;
+  --font-color: #555;
 }
-*{
-    margin: 30px
-    padding: 30px;
-    box-sizing: border-box;
-    font-family: dejavu-sans;
+
+* {
+  margin: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: 'DejaVu Sans', sans-serif;
 }
-html{
-  min-height: 100%
+
+html {
+  min-height: 100%;
 }
-body{
+
+body {
   background-image: linear-gradient(125deg, #a4ac86, #132a13);
   background-size: cover;
-  display: flex;
+  overflow: auto;
   justify-content: center;
   align-items: center;
   padding: 30px;
+
 }
+
 @font-face {
-     font-family: dejavu-sans;
-     src: url(dejavu-sans.book.ttf);
+  font-family: 'DejaVu Sans';
+  src: url(dejavu-sans.book.ttf);
 }
-input[type=text] {
-  display: grid;
+
+.container {
+  max-width: 700px;
+  width: 100%;
+  background: white;
+  padding: 25px 30px;
+  margin: 25px auto;
+  border-radius: 25px;
+}
+
+.container .title {
+  font-size: 25px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+input[type="text"] {
+  display: block;
+  width: calc(100% - 40px);
+  padding: 12px 20px;
+  margin-bottom: 5px;
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 18px;
-  font-family: dejavu-sans;
+  font-family: 'DejaVu Sans';
   color: var(--font-color);
-  width: 100%;
-  padding: 12px 20px;
-  margin-bottom:5px;
-  outline: 0;
 }
-input[type=text]:focus {
-  border: 3px solid #555;
-  outline:none;
+
+input[type="text"]:focus {
+  border-color: var(--font-color);
 }
+
 label {
-  width: 30%;
+  width: auto;
   text-align: right;
-  font-family: dejavu-sans;
 }
+
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset;
-  -webkit-text-fill-color: var(--font-color);
+    -webkit-box-shadow: inset 0px 0px 0px white;
+    -webkit-text-fill-color: var(--font-color);
 }
-input[type=button], input[type=submit], input[type=reset] {
- background-color: white;
-   max-width: 700px;
-   width:100%;
-   border: 1px solid #ccc;
-   border-radius: 5px;
-   color: var(--font-color);
-   padding: 16px 32px;
-   text-decoration: none;
-   margin: 10px auto;
-   cursor: pointer;
-   display: block;
-   text-align: center;
-}
-input::placeholder {
-  opacity: 0.5;
-  color: var(--font-color);
-}
-.container{
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.button {
+    background-color: white;
     max-width: 700px;
-    width:100%;
-    background: white;
-    padding: 25px 30px;
-    border-radius: 25px;
-}
-.container .title{
-    font-size: 25px;
-    font-weight: 500;
-    position: relative;
-    margin-bottom: 20px;
-    text-align:center;
-}
-.button{
-  background-color: white;
-  max-width: 700px;
-  width:100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: var(--font-color);
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 10px auto;
-  cursor: pointer;
-  display: block;
-  text-align: center;
-}
-a {
-  text-decoration: none;
-}
-br{
-   color: var(--font-color);
-   text-align: center;
-}
-p{
-   border: 1px solid #ccc;
-   border-radius: 5px;
-   padding: 10px;
-   margin: auto;
+    width: calc(100% - 20px);
+    border-radius: 5px;
+    color: var(--font-color);
+    padding: 16px;
+    text-decoration: none;
+    margin-top:10px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
 }
 
+input::placeholder {
+    opacity: .5;
+    color: var(--font-color);
+}
 
-
-
+p {
+    border-radius: 5px;
+    padding:10px;
+    margin:auto;
+    border :1px solid #ccc;
+}

@@ -9,8 +9,10 @@ import java.util.Date;
 public class WorkPlace {
     @NotEmpty
     private String nameOfCompany;
+    @NotEmpty
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date startOfWork;
+    @NotEmpty
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private Date endOfWork;
     @NotEmpty
