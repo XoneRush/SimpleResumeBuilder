@@ -9,12 +9,16 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.TextPosition;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,12 +57,12 @@ public class MockupGenerator {
         // - 1 page
         PDPage page = new PDPage();
 
-
         //Генерация шаблона
         PDPageContentStream contentStream = new PDPageContentStream(document, page);
         PDRectangle BBox = page.getBBox();
 
         drawBackground(contentStream, BBox);
+        drawPicture(contentStream,10,620,"src/main/resources/static/" + person.getImageData().getName() + ".png", document, BBox);
 
         //Основная информация
         contentStream.beginText();
@@ -120,6 +124,14 @@ public class MockupGenerator {
     private void drawBackground(PDPageContentStream content, PDRectangle BBox) throws IOException {
         Rectangle rectangle = new Rectangle(0, 0, (int)(BACKGROUND_MULTIPLIER * BBox.getWidth()),(int)BBox.getHeight());
         drawRect(content,  HEADER_COLOR, rectangle, true);
+    }
+    private void drawPicture(PDPageContentStream contentStream, int x, int y, String image_path,PDDocument document, PDRectangle BBox){
+       try{
+           PDImageXObject pdImage = PDImageXObject.createFromFile(image_path, document);
+           contentStream.drawImage(pdImage, x, y, (int)(BACKGROUND_MULTIPLIER * BBox.getWidth() - 20),(int)(BBox.getHeight() * 0.25 - 10));
+       }catch (IOException e){
+           System.out.println("Данной картинки не обнаружилось");
+       }
     }
     private void drawRect(PDPageContentStream content, Color color, Rectangle rect, boolean fill) throws IOException {
         content.addRect(rect.x, rect.y, rect.width, rect.height);

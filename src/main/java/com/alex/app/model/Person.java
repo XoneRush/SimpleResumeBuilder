@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.EditorKit;
 import java.util.ArrayList;
@@ -30,9 +31,16 @@ public class Person {
     private List<WorkPlace> workPlaces = new ArrayList<>();
     private List<Education> educations = new ArrayList<>();
 
+    @NotEmpty
+    private String option = " ";
+
+    private MultipartFile imageData;
+
     public Person(){};
     public Person(String name, String last_name, Date date_of_birth, String number,
-                  String email, String experience, String city, List<WorkPlace> workPlaces, List<Education> educations) {
+                  String email, String experience, String city,
+                  List<WorkPlace> workPlaces, List<Education> educations,
+                  String option, MultipartFile imageData) {
         this.name = name;
         this.last_name = last_name;
         this.date_of_birth = date_of_birth;
@@ -41,6 +49,8 @@ public class Person {
         this.experience = experience;
         this.workPlaces = workPlaces;
         this.educations = educations;
+        this.option = option;
+        this.imageData = imageData;
     }
 
     public String getName() {
@@ -104,6 +114,22 @@ public class Person {
 
     public void setEducations(List<Education> educations) {
         this.educations = educations;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
+
+    public MultipartFile getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(MultipartFile imageData) {
+        this.imageData = imageData;
     }
 
     @Override

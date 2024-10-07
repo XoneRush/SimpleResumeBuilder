@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +26,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Instant;
 
 @Controller
 public class PersonController {
@@ -54,8 +56,13 @@ public class PersonController {
             System.out.println(bindingResult);
             return "people/create";
         }
+
+        System.out.println("Создание резюме " + Instant.now());
+
         personService.deleteResume();
+        personService.savePhoto(person);
         personService.createResume(person);
+        personService.deletePhoto(person);
         return "redirect:/download";
     }
     @GetMapping(value="/download")
@@ -67,10 +74,3 @@ public class PersonController {
                 .body(pdf);
     }
 }
-
-//TODO validation
-    //NotEmpty validation +
-    //Date validation
-//TODO more fields
-//TODO PDF logic
-//TODO PDF download +
