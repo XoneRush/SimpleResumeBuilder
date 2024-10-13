@@ -66,7 +66,7 @@
                     <label for="option1" class="radio-label" style="background-image: url('mockup1.png');"></label>
 
                     <input type="radio" id="option2" name="image" class="image-radio" th:field="*{option}" th:value="secondMockup"/>
-                    <label for="option2" class="radio-label" style="background-image: url('mockup2.png');"></label>
+                    <label for="option2" class="radio-label" style="background-image: url('mockup_n.png');"></label>
 
                 </div>
             </div>
@@ -105,8 +105,12 @@
             <div style="color:red" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"> city error </div>
             <br/>
 
-            <input style="max-width=150ch" placeholder="Work experience" type="text" th:field="*{experience}" id="experience">
-            <div style="color:red" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"> experience error </div>
+            <input style="max-width=150ch" placeholder="Expected salary" type="text" th:field="*{expectedSalary}" id="expectedSalary">
+            <div style="color:red" th:if="${#fields.hasErrors('expectedSalary')}" th:errors="*{expectedSalary}"> experience error </div>
+            <br/>
+
+            <input style="max-width=150ch" placeholder="Your languages" type="text" th:field="*{languages}" id="languages">
+            <div style="color:red" th:if="${#fields.hasErrors('languages')}" th:errors="*{languages}"> experience error </div>
             <br/>
 
             <div class="workPlaces" id="workPlaces-container" th:object = "${workPlaces}">

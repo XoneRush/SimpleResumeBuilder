@@ -215,12 +215,12 @@ public class MockupGenerator {
     private void showOtherInfo(PDPageContentStream content) throws IOException {
         showHeader3("Желаемая зарплата", Color.WHITE, content);
         setColor(Color.WHITE, content);
-        showMessage2(" ", content);
-        showHeader3("Занятость", Color.WHITE, content);
-        setColor(Color.WHITE, content);
-        showMessage2(" ", content);
+        showMessage2(person.getExpectedSalary(), content);
+//        showHeader3("Занятость", Color.WHITE, content);
+//        setColor(Color.WHITE, content);
+//        showMessage2(" ", content);
         showHeader3("Иностранные языки", Color.WHITE, content);
-        showMessage2(" ", content);
+        showMessage2(person.getLanguages(), content);
     }
 
 

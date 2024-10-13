@@ -26,31 +26,34 @@ public class Person {
     private String city;
     @NotEmpty
     @Size(min = 0, max = 150, message = "message cant be greater then 150 symbols")
-    private String experience;
+    private String expectedSalary;
 
     private List<WorkPlace> workPlaces = new ArrayList<>();
     private List<Education> educations = new ArrayList<>();
 
     @NotEmpty
     private String option = " ";
+    @NotEmpty
+    private String languages;
 
     private MultipartFile imageData;
 
     public Person(){};
     public Person(String name, String last_name, Date date_of_birth, String number,
-                  String email, String experience, String city,
+                  String email, String expectedSalary, String city,
                   List<WorkPlace> workPlaces, List<Education> educations,
-                  String option, MultipartFile imageData) {
+                  String option, MultipartFile imageData, String languages) {
         this.name = name;
         this.last_name = last_name;
         this.date_of_birth = date_of_birth;
         this.number = number;
         this.email = email;
-        this.experience = experience;
+        this.expectedSalary = expectedSalary;
         this.workPlaces = workPlaces;
         this.educations = educations;
         this.option = option;
         this.imageData = imageData;
+        this.languages = languages;
     }
 
     public String getName() {
@@ -84,20 +87,20 @@ public class Person {
         this.email = email;
     }
 
+    public String getExpectedSalary() {
+        return expectedSalary;
+    }
+
+    public void setExpectedSalary(String expectedSalary) {
+        this.expectedSalary = expectedSalary;
+    }
+
     public String getCity() {
         return city;
     }
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
     }
 
     public List<WorkPlace> getWorkPlaces() {
@@ -132,6 +135,14 @@ public class Person {
         this.imageData = imageData;
     }
 
+    public String getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(String languages) {
+        this.languages = languages;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -141,7 +152,7 @@ public class Person {
                 ", number='" + number + '\'' +
                 ", email='" + email + '\'' +
                 ", city='" + city + '\'' +
-                ", experience='" + experience + '\'' +
+                ", expected salary='" + expectedSalary + '\'' +
                 '}';
     }
 }
